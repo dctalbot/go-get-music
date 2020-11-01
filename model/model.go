@@ -1,6 +1,8 @@
 package model
 
 type RowResult struct {
-	Artist string
-	Name   string
+	Artists string
+	Name    string
+	Genres  string
+	Source  string
 }

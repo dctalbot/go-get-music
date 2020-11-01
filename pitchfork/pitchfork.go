@@ -1,6 +1,7 @@
 package pitchfork
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -8,7 +9,8 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-const bestNewAlbumsURL = "https://pitchfork.com/reviews/best/albums/?page=1"
+const bestNewAlbumsURL = "https://pitchfork.com/reviews/best/albums/"
+const pageCount = 1
 
 // Do does the thing
 func Do() []model.RowResult {
@@ -20,15 +22,22 @@ func Do() []model.RowResult {
 
 		var artists []string
 		name := e.DOM.Find("h2").Text()
+		var genres []string
 
 		e.DOM.Find(".artist-list").Children().Each(func(a int, b *goquery.Selection) {
 			artists = append(artists, b.Text())
 		})
 
-		result = append(result, model.RowResult{Artist: strings.Join(artists, ", "), Name: name})
+		e.DOM.Find(".genre-list").Children().Each(func(a int, b *goquery.Selection) {
+			genres = append(genres, b.Text())
+		})
+
+		result = append(result, model.RowResult{Artists: strings.Join(artists, ", "), Name: name, Source: "Pitchfork", Genres: strings.Join(genres, ", ")})
 	})
 
-	c.Visit(bestNewAlbumsURL)
+	for i := 1; i <= pageCount; i++ {
+		c.Visit(bestNewAlbumsURL + "?page=" + strconv.Itoa(i))
+	}
 
 	return result
 }

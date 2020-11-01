@@ -2,21 +2,31 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/dctalbot/go-get-music/model"
 	"github.com/dctalbot/go-get-music/pitchfork"
+	"github.com/jedib0t/go-pretty/table"
 )
 
 func main() {
 
 	fmt.Println("running")
 
-	var result []model.RowResult
+	var results []model.RowResult
 
-	result = append(result, pitchfork.Do()...)
+	results = append(results, pitchfork.Do()...)
 	// result = append(result, allmusic.do())
 	// result = append(result, npr.do())
 
-	fmt.Println(result)
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"#", "Artist", "Name", "Genre"})
+
+	for line := range results {
+		t.AppendRow([]interface{}{line + 1, results[line].Artists, results[line].Name, results[line].Genres})
+	}
+
+	t.Render()
 
 }
