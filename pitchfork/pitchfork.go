@@ -32,7 +32,12 @@ func Do() []model.RowResult {
 			genres = append(genres, b.Text())
 		})
 
-		result = append(result, model.RowResult{Artists: strings.Join(artists, ", "), Name: name, Source: "Pitchfork", Genres: strings.Join(genres, ", ")})
+		result = append(result, model.RowResult{
+			Artists: strings.Join(artists, ", "),
+			Name:    name,
+			Source:  "Pitchfork",
+			Genres:  strings.Join(genres, ", "),
+		})
 	})
 
 	for i := 1; i <= pageCount; i++ {

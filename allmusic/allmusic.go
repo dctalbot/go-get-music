@@ -30,7 +30,12 @@ func Do() []model.RowResult {
 			genres = append(genres, b.Text())
 		})
 
-		result = append(result, model.RowResult{Artists: strings.Join(artists, ", "), Name: title, Source: "All Music", Genres: strings.Join(genres, ", ")})
+		result = append(result, model.RowResult{
+			Artists: strings.Join(artists, ", "),
+			Name:    title,
+			Source:  "All Music",
+			Genres:  strings.Join(genres, ", "),
+		})
 	})
 
 	c.Visit(editorsChoiceURL)
