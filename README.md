@@ -2,13 +2,10 @@
 
 This was my first project in Go, so lower your expectations...
 
-I wanted a command line that would give me the best new music of the past few weeks. Something like...
+This is a CLI that reports the best new music of the past few weeks.
 
-    go-get-music --since <ISO date> --include <genre[]> --exclude <genre[]> --save=<bool> --limit=<int>
+![demo](./demo.png)
 
-    #  |  ARTIST  |  ALBUM  |  GENRE  |  URL
-
-
-Aggregated from Pitchfork, All Music etc. And I'll probably just sort alphabetically.
+Results are aggregated from Pitchfork, All Music etc.
 
 Future work could include creating a playlist for spotify or apple music based on results, updating periodically by means of something like a cron job
